@@ -39,3 +39,24 @@ const bus3 = {
         { name: "Chewbacca", isPresent: false },
     ]
 }
+
+const displaybus = (bus) => {
+    // -> for loop to iterate through each element
+    // for (const key in bus.students) {
+        // var student = bus.students[key]
+        // const listNode = document.createElement('li'); 
+        // const listTextNode = document.createTextNode(`${student.name}, ${student.isPresent}`);
+        // listNode.appendChild(listTextNode);
+        // document.getElementById("bus-display").appendChild(listNode);
+    // }
+
+    // -> forEach method to create a node for each student 
+    bus.students.forEach(student => {
+        const listNode = document.createElement('li'); 
+        const listTextNode = document.createTextNode(`${student.name}, ${student.isPresent}`);
+        listNode.appendChild(listTextNode);
+        document.getElementById("bus-display").appendChild(listNode);
+    });
+}
+
+displaybus(bus1);

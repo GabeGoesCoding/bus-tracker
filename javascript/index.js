@@ -1,6 +1,6 @@
 // Mocked data for bus1, bus2, and bus3.
 const bus1 = {
-    busId: 19990501,
+    busId: '19990501',
     status: "FULL",
     driver: "Mrs. Puff",
     students: [
@@ -14,7 +14,7 @@ const bus1 = {
 }
 
 const bus2 = {
-    busId: 19890426,
+    busId: '19890426',
     status: "PARTIAL",
     driver: "Roshi",
     students: [
@@ -28,7 +28,7 @@ const bus2 = {
 }
 
 const bus3 = {
-    busId: 19770525,
+    busId: '19770525',
     status: "EMPTY",
     driver: "Yoda",
     students: [
@@ -47,17 +47,15 @@ const busses = [bus1, bus2, bus3];
 const displaySideNav = (busses) => {
     busses.forEach(bus => {
         const aNode = document.createElement('a');
-        aNode.setAttribute('href', `#${bus.busId}`);
-        const aTextNode = document.createTextNode(`Bus: ${bus.busId}`);
-        aNode.appendChild(aTextNode);
+        aNode.setAttribute('href', `index.html?busId=${bus.busId}`);
+        aNode.innerHTML = `Bus: ${bus.busId}`
+        aNode.addEventListener('onclick', checkBus());
         document.getElementById('sideNav').appendChild(aNode);
     });
 }
 
-
 // Create a list item for each student and render it on the page.
-const displaybus = (bus) => {
-
+const displayStudents = (bus) => {
     // remove 'bus-display' content
     document.getElementById('bus-display').innerHTML = "";
 
@@ -73,7 +71,6 @@ const displaybus = (bus) => {
                 student.isPresent = true;
                 buttonNode.innerHTML = true;
             }
-            displaybus(bus);
         });
         const pNode = document.createElement('p'); 
         pNode.innerHTML += `${student.name} here is ${student.isPresent} `;
@@ -84,5 +81,17 @@ const displaybus = (bus) => {
     });
 }
 
-displaybus(bus1);
+    // grabs 'busId' from urlSearchParams to display the students for that bus
+    function checkBus() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var currentBusId = urlParams.get('busId');
+
+        busses.forEach((bus) => {
+            console.log(bus.busId);
+            if (currentBusId === bus.busId) {
+                displayStudents(bus);
+            }
+        });
+    }
+
 displaySideNav(busses);

@@ -1,3 +1,4 @@
+// Mocked data for bus1, bus2, and bus3.
 const bus1 = {
     busId: 19990501,
     status: "FULL",
@@ -40,17 +41,21 @@ const bus3 = {
     ]
 }
 
-const displaybus = (bus) => {
-    // -> for loop to iterate through each element
-    // for (const key in bus.students) {
-        // var student = bus.students[key]
-        // const listNode = document.createElement('li'); 
-        // const listTextNode = document.createTextNode(`${student.name}, ${student.isPresent}`);
-        // listNode.appendChild(listTextNode);
-        // document.getElementById("bus-display").appendChild(listNode);
-    // }
+const busses = [bus1, bus2, bus3];
 
-    // -> forEach method to create a node for each student 
+// Display all the busses in the database on 'sideNav' bar.
+const displaySideNav = (busses) => {
+    busses.forEach(bus => {
+        const aNode = document.createElement('a');
+        aNode.setAttribute('href', `#${bus.busId}`);
+        const aTextNode = document.createTextNode(`Bus: ${bus.busId}`);
+        aNode.appendChild(aTextNode);
+        document.getElementById('sideNav').appendChild(aNode);
+    });
+}
+
+const displaybus = (bus) => {
+    // Create a list item for each student and render it on the page.
     bus.students.forEach(student => {
         const listNode = document.createElement('li'); 
         const listTextNode = document.createTextNode(`${student.name}, ${student.isPresent}`);
@@ -60,3 +65,4 @@ const displaybus = (bus) => {
 }
 
 displaybus(bus1);
+displaySideNav(busses);

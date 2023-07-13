@@ -1,0 +1,16 @@
+{
+  "name": "bus-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "javascript/index.js",
+  "scripts": {
+    "start": "node -r esm javascript/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esm": "^3.2.25"
+  }
+}

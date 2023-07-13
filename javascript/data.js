@@ -1,4 +1,4 @@
-let bus1 = {
+export const bus1 = {
     busId: 19990501,
     status: "FULL",
     driver: "Mrs. Puff",
@@ -12,7 +12,7 @@ let bus1 = {
     ]
 }
 
-let bus2 = {
+export const bus2 = {
     busId: 19890426,
     status: "PARTIAL",
     driver: "Roshi",
@@ -26,7 +26,7 @@ let bus2 = {
     ]
 }
 
-let bus3 = {
+export const bus3 = {
     busId: 19770525,
     status: "EMPTY",
     driver: "Yoda",

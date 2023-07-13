@@ -54,13 +54,33 @@ const displaySideNav = (busses) => {
     });
 }
 
+
+// Create a list item for each student and render it on the page.
 const displaybus = (bus) => {
-    // Create a list item for each student and render it on the page.
+
+    // remove 'bus-display' content
+    document.getElementById('bus-display').innerHTML = "";
+
+    // for each student, display name, status, and create a button to track state.
     bus.students.forEach(student => {
-        const listNode = document.createElement('li'); 
-        const listTextNode = document.createTextNode(`${student.name}, ${student.isPresent}`);
-        listNode.appendChild(listTextNode);
-        document.getElementById("bus-display").appendChild(listNode);
+        const buttonNode = document.createElement('button')
+        buttonNode.innerHTML = student.isPresent;
+        buttonNode.addEventListener('click', () => {
+            if (student.isPresent) {
+                student.isPresent = false;
+                buttonNode.innerHTML = false;
+            } else {
+                student.isPresent = true;
+                buttonNode.innerHTML = true;
+            }
+            displaybus(bus);
+        });
+        const pNode = document.createElement('p'); 
+        pNode.innerHTML += `${student.name} here is ${student.isPresent} `;
+        pNode.appendChild(buttonNode);
+
+        // add new paragraph for each student
+        document.getElementById("bus-display").appendChild(pNode);
     });
 }
 

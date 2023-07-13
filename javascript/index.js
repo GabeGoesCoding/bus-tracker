@@ -71,6 +71,7 @@ const displayStudents = (bus) => {
                 student.isPresent = true;
                 buttonNode.innerHTML = true;
             }
+            checkBus(bus);
         });
         const pNode = document.createElement('p'); 
         pNode.innerHTML += `${student.name} here is ${student.isPresent} `;
@@ -87,7 +88,6 @@ const displayStudents = (bus) => {
         var currentBusId = urlParams.get('busId');
 
         busses.forEach((bus) => {
-            console.log(bus.busId);
             if (currentBusId === bus.busId) {
                 displayStudents(bus);
             }

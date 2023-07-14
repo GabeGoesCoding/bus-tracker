@@ -62,19 +62,20 @@ const displayStudents = (bus) => {
     // for each student, display name, status, and create a button to track state.
     bus.students.forEach(student => {
         const buttonNode = document.createElement('button')
-        buttonNode.innerHTML = student.isPresent;
+        var studentStatus = student.isPresent ? "here" : "not here";
+        buttonNode.innerHTML = student.isPresent ? "Mark as absent" : "Mark as present"; 
         buttonNode.addEventListener('click', () => {
             if (student.isPresent) {
                 student.isPresent = false;
-                buttonNode.innerHTML = false;
+                buttonNode.innerHTML = "Present";
             } else {
                 student.isPresent = true;
-                buttonNode.innerHTML = true;
+                buttonNode.innerHTML = "Absent";
             }
             checkBus(bus);
         });
         const pNode = document.createElement('p'); 
-        pNode.innerHTML += `${student.name} here is ${student.isPresent} `;
+        pNode.innerHTML += `${student.name} is ${studentStatus} `;
         pNode.appendChild(buttonNode);
 
         // add new paragraph for each student

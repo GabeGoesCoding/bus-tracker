@@ -113,4 +113,9 @@ const displayStudents = (bus) => {
         document.getElementById('bus-capacity').innerHTML = bus.busCapacity.toUpperCase();
     }
 
+    function createBus(busId) {
+        
+
+    }
+
 displaySideNav(busses);

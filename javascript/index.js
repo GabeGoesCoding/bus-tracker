@@ -93,10 +93,8 @@ const displayStudents = (bus) => {
         buttonNode.addEventListener('click', () => {
             if (student.isPresent) {
                 student.isPresent = false;
-                buttonNode.innerHTML = "Present";
             } else {
                 student.isPresent = true;
-                buttonNode.innerHTML = "Absent";
             }
             checkBus(bus);
         });

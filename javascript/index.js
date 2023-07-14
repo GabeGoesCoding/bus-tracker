@@ -90,9 +90,27 @@ const displayStudents = (bus) => {
 
         busses.forEach((bus) => {
             if (currentBusId === bus.busId) {
+                checkBusCapacity(bus);
                 displayStudents(bus);
             }
         });
+    }
+
+    // Iterate through students to determine the bus capacity
+    function checkBusCapacity(bus) {
+        const partialCapacity = bus.students.some((student) => student.isPresent === false);
+        const emptyCapacity = bus.students.every((student) => student.isPresent === false);
+
+        if (emptyCapacity) {
+            bus.busCapacity = "empty"
+        } else if (partialCapacity) {
+            bus.busCapacity = "partial";
+        } else {
+            bus.busCapacity = "full";
+        }
+
+        // set 'bus-capacity' to current busCapacity
+        document.getElementById('bus-capacity').innerHTML = bus.busCapacity.toUpperCase();
     }
 
 displaySideNav(busses);

@@ -69,43 +69,16 @@ mockBus3.addStudent(new Student("Luke"));
 mockBus3.addStudent(new Student("Darth Vader"));
 mockBus3.addStudent(new Student("Chewbacca"));
 
-// Display all the busses in the database on 'sideNav' bar.
-const displaySideNav = (busses) => {
-    busses.forEach(bus => {
-        const aNode = document.createElement('a');
-        aNode.setAttribute('href', `index.html?busId=${bus.busId}`);
-        aNode.innerHTML = `Bus: ${bus.busId}`
-        aNode.addEventListener('onclick', checkBus());
-        document.getElementById('sideNav').appendChild(aNode);
-    });
-}
-
-// Create a list item for each student and render it on the page.
-const displayStudents = (bus) => {
-    // remove 'bus-display' content
-    document.getElementById('bus-display').innerHTML = "";
-
-    // for each student, display name, status, and create a button to track state.
-    bus.students.forEach(student => {
-        const buttonNode = document.createElement('button')
-        var studentStatus = student.isPresent ? "here" : "not here";
-        buttonNode.innerHTML = student.isPresent ? "Mark as absent" : "Mark as present"; 
-        buttonNode.addEventListener('click', () => {
-            if (student.isPresent) {
-                student.isPresent = false;
-            } else {
-                student.isPresent = true;
-            }
-            checkBus(bus);
+    // Display all the busses in the database on 'sideNav' bar.
+    const displaySideNav = (busses) => {
+        busses.forEach(bus => {
+            const aNode = document.createElement('a');
+            aNode.setAttribute('href', `index.html?busId=${bus.busId}`);
+            aNode.innerHTML = `Bus: ${bus.busId}`
+            aNode.addEventListener('onclick', checkBus());
+            document.getElementById('sideNav').appendChild(aNode);
         });
-        const pNode = document.createElement('p'); 
-        pNode.innerHTML += `${student.name} is ${studentStatus} `;
-        pNode.appendChild(buttonNode);
-
-        // add new paragraph for each student
-        document.getElementById("bus-display").appendChild(pNode);
-    });
-}
+    }
 
     // grabs 'busId' from urlSearchParams to display the students for that bus
     function checkBus() {
@@ -135,6 +108,33 @@ const displayStudents = (bus) => {
 
         // set 'bus-capacity' to current busCapacity
         document.getElementById('bus-capacity').innerHTML = bus.busCapacity.toUpperCase();
+    }
+
+    // Create a list item for each student and render it on the page.
+    const displayStudents = (bus) => {
+        // remove 'bus-display' content
+        document.getElementById('bus-display').innerHTML = "";
+
+        // for each student, display name, status, and create a button to track state.
+        bus.students.forEach(student => {
+            const buttonNode = document.createElement('button')
+            var studentStatus = student.isPresent ? "here" : "not here";
+            buttonNode.innerHTML = student.isPresent ? "Mark as absent" : "Mark as present"; 
+            buttonNode.addEventListener('click', () => {
+                if (student.isPresent) {
+                    student.isPresent = false;
+                } else {
+                    student.isPresent = true;
+                }
+                checkBus(bus);
+            });
+            const pNode = document.createElement('p'); 
+            pNode.innerHTML += `${student.name} is ${studentStatus} `;
+            pNode.appendChild(buttonNode);
+
+            // add new paragraph for each student
+            document.getElementById("bus-display").appendChild(pNode);
+        });
     }
 
     function createBus(busId, driver) {

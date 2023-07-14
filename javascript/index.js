@@ -20,7 +20,7 @@ class Student {
 class Bus {
     constructor(busId, driver) {
         this.busId = busId;
-        this.status = "empty";
+        this.capacity = "empty";
         this.driver = driver;
         this.students = [];
     }
@@ -37,12 +37,26 @@ class Bus {
             this.students.splice(index, 1);
         }
     }
+
+    // checks and updates the capacity of the bus based on the students array
+    updateCapacity() {
+        const partialCapacity = this.students.some((student) => student.isPresent === false);
+        const emptyCapacity = this.students.every((student) => student.isPresent === false);
+
+        if (emptyCapacity) {
+            this.capacity = "empty"
+        } else if (partialCapacity) {
+            this.capacity = "partial";
+        } else {
+            this.capacity = "full";
+        }
+    }
 }
 
-const busses = [];
+const busMap = new Map();
 
 const mockBus1 = new Bus("501", "Mrs. Puff");
-busses.push(mockBus1);
+busMap.set("501", mockBus1);
 mockBus1.addStudent(new Student("Squidward"));
 mockBus1.addStudent(new Student("Spongebob"));
 mockBus1.addStudent(new Student("Patrick"));
@@ -52,7 +66,7 @@ mockBus1.addStudent(new Student("Gary"));
 
 
 const mockBus2 = new Bus("426", "Roshi");
-busses.push(mockBus2);
+busMap.set("426", mockBus2);
 mockBus2.addStudent(new Student("Goku"));
 mockBus2.addStudent(new Student("Piccolo"));
 mockBus2.addStudent(new Student("Kirllin"));
@@ -61,7 +75,7 @@ mockBus2.addStudent(new Student("Vegeta"));
 mockBus2.addStudent(new Student("Trunks"));
 
 const mockBus3 = new Bus("525", "Yoda");
-busses.push(mockBus3);
+busMap.set("525", mockBus3);
 mockBus3.addStudent(new Student("Han Solo"));
 mockBus3.addStudent(new Student("Ben"));
 mockBus3.addStudent(new Student("Leah"));
@@ -69,93 +83,79 @@ mockBus3.addStudent(new Student("Luke"));
 mockBus3.addStudent(new Student("Darth Vader"));
 mockBus3.addStudent(new Student("Chewbacca"));
 
-    // Display all the busses in the database on 'sideNav' bar.
-    const displaySideNav = (busses) => {
-        busses.forEach(bus => {
-            const aNode = document.createElement('a');
-            aNode.setAttribute('href', `index.html?busId=${bus.busId}`);
-            aNode.innerHTML = `Bus: ${bus.busId}`
-            aNode.addEventListener('onclick', checkBus());
-            document.getElementById('sideNav').appendChild(aNode);
-        });
-    }
+// Display all the busses in the database on 'sideNav' bar.
+function displaySideNav() {
+    const busIdsArray = Array.from(busMap.keys());
+    busIdsArray.forEach(busId => {
+        const aNode = document.createElement('a');
+        aNode.setAttribute('href', `index.html?busId=${busId}`);
+        aNode.innerHTML = `Bus: ${busId}`;
+        aNode.addEventListener('onclick', displayStudents());
+        document.getElementById('sideNav').appendChild(aNode);
+    });
+}
 
-    // grabs 'busId' from urlSearchParams to display the students for that bus
-    function checkBus() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var currentBusId = urlParams.get('busId');
+// Create a list item for each student and render it on the page.
+function displayStudents() {
+    const bus = getBusFromParams();
+    displayBusCapacity(bus);
 
-        busses.forEach((bus) => {
-            if (currentBusId === bus.busId) {
-                checkBusCapacity(bus);
-                displayStudents(bus);
+    // remove 'bus-display' content
+    document.getElementById('bus-display').innerHTML = "";
+    // for each student, display name, status, and create a button to track state.
+    bus.students.forEach(student => {
+        const buttonNode = document.createElement('button')
+        var studentStatus = student.isPresent ? "here" : "not here";
+        buttonNode.innerHTML = student.isPresent ? "Mark as absent" : "Mark as present"; 
+        buttonNode.addEventListener('click', () => {
+            if (student.isPresent) {
+                student.markAbsent();
+            } else {
+                student.markPresent();
             }
+            displayStudents();
         });
-    }
+        const pNode = document.createElement('p'); 
+        pNode.innerHTML += `${student.name} is ${studentStatus} `;
+        pNode.appendChild(buttonNode);
 
-    // Iterate through students to determine the bus capacity
-    function checkBusCapacity(bus) {
-        const partialCapacity = bus.students.some((student) => student.isPresent === false);
-        const emptyCapacity = bus.students.every((student) => student.isPresent === false);
+        // add new paragraph for each student
+        document.getElementById("bus-display").appendChild(pNode);
+    });
+}
 
-        if (emptyCapacity) {
-            bus.busCapacity = "empty"
-        } else if (partialCapacity) {
-            bus.busCapacity = "partial";
-        } else {
-            bus.busCapacity = "full";
-        }
+// updates the bus capacity and displays it on the page
+function displayBusCapacity(bus) {
+    bus.updateCapacity();
+    document.getElementById('bus-capacity').innerHTML = bus.capacity.toUpperCase();
+}
 
-        // set 'bus-capacity' to current busCapacity
-        document.getElementById('bus-capacity').innerHTML = bus.busCapacity.toUpperCase();
-    }
+// graps a bus from the busMap by using the busId params
+function getBusFromParams() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var currentBusId = urlParams.get('busId');
+    return busMap.get(currentBusId); 
+}
 
-    // Create a list item for each student and render it on the page.
-    const displayStudents = (bus) => {
-        // remove 'bus-display' content
-        document.getElementById('bus-display').innerHTML = "";
+    // function createBus(busId, driver) {
+        // const newBus = new Bus(busId, driver);
+        // busses.push(newBus);
+    // }
 
-        // for each student, display name, status, and create a button to track state.
-        bus.students.forEach(student => {
-            const buttonNode = document.createElement('button')
-            var studentStatus = student.isPresent ? "here" : "not here";
-            buttonNode.innerHTML = student.isPresent ? "Mark as absent" : "Mark as present"; 
-            buttonNode.addEventListener('click', () => {
-                if (student.isPresent) {
-                    student.isPresent = false;
-                } else {
-                    student.isPresent = true;
-                }
-                checkBus(bus);
-            });
-            const pNode = document.createElement('p'); 
-            pNode.innerHTML += `${student.name} is ${studentStatus} `;
-            pNode.appendChild(buttonNode);
-
-            // add new paragraph for each student
-            document.getElementById("bus-display").appendChild(pNode);
-        });
-    }
-
-    function createBus(busId, driver) {
-        const newBus = new Bus(busId, driver);
-        busses.push(newBus);
-    }
-
-    function createStudent(busId, name) {
-        const newStudent = new Student(name);
-        let currentBus = new Bus();
-        busses.forEach(bus => {
-            if (bus.busId == busId) {
-                currentBus = bus;
-            }
-        });
-        currentBus.addStudent(newStudent);
-    }
+    // function createStudent(busId, name) {
+        // const newStudent = new Student(name);
+        // let currentBus = new Bus();
+        // busses.forEach(bus => {
+            // if (bus.busId == busId) {
+                // currentBus = bus;
+            // }
+        // });
+        // currentBus.addStudent(newStudent);
+    // }
      
-    function createStudentWithBusObject(bus, name) {
-        const newStudent = new Student(name);
-        bus.addStudent(newStudent);
-    }
+    // function createStudentWithBusObject(bus, name) {
+        // const newStudent = new Student(name);
+        // bus.addStudent(newStudent);
+    // }
 
-displaySideNav(busses);
+displaySideNav();

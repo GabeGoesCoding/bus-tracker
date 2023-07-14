@@ -4,6 +4,16 @@ class Student {
         this.name = name;
         this.isPresent = false;
     }
+ 
+    // sets a student attendence to true
+    markPresent() {
+        this.isPresent = true;
+    }
+
+    // sets a student attendence to false
+    markAbsent() {
+        this.isPresent = false;
+    }
 }
 
 // constructor for bus class: params @busId, @driver
@@ -15,8 +25,17 @@ class Bus {
         this.students = [];
     }
 
+    // adds a student object to the list of students for a bus
     addStudent(student) {
         this.students.push(student);
+    }
+
+    // finds student by index and removes student if index is not out of bounds
+    removeStudent(studentName) {
+        const index = this.students.findIndex(student => student.name === studentName);
+        if (index !== -1) {
+            this.students.splice(index, 1);
+        }
     }
 }
 
@@ -30,6 +49,7 @@ mockBus1.addStudent(new Student("Patrick"));
 mockBus1.addStudent(new Student("Eugene"));
 mockBus1.addStudent(new Student("Sandy"));
 mockBus1.addStudent(new Student("Gary"));
+
 
 const mockBus2 = new Bus("426", "Roshi");
 busses.push(mockBus2);

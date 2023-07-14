@@ -1,47 +1,53 @@
-// Mocked data for bus1, bus2, and bus3.
-const bus1 = {
-    busId: '19990501',
-    status: "FULL",
-    driver: "Mrs. Puff",
-    students: [
-        { name: "Squidward", isPresent: true },
-        { name: "Spongebob", isPresent: true },
-        { name: "Patrick", isPresent: true },
-        { name: "Eugene", isPresent: true },
-        { name: "Sandy", isPresent: true },
-        { name: "Gary", isPresent: true },
-    ]
+// constructor for student class: params @name
+class Student {
+    constructor(name) {
+        this.name = name;
+        this.isPresent = false;
+    }
 }
 
-const bus2 = {
-    busId: '19890426',
-    status: "PARTIAL",
-    driver: "Roshi",
-    students: [
-        { name: "Goku", isPresent: false },
-        { name: "Piccolo", isPresent: false },
-        { name: "Krillin", isPresent: true },
-        { name: "Gohan", isPresent: true },
-        { name: "Vegeta", isPresent: true },
-        { name: "Trunks", isPresent: true },
-    ]
+// constructor for bus class: params @busId, @driver
+class Bus {
+    constructor(busId, driver) {
+        this.busId = busId;
+        this.status = "empty";
+        this.driver = driver;
+        this.students = [];
+    }
+
+    addStudent(student) {
+        this.students.push(student);
+    }
 }
 
-const bus3 = {
-    busId: '19770525',
-    status: "EMPTY",
-    driver: "Yoda",
-    students: [
-        { name: "Han Solo", isPresent: false },
-        { name: "Ben", isPresent: false },
-        { name: "Leah", isPresent: false },
-        { name: "Luke", isPresent: false },
-        { name: "Darth Vader", isPresent: false },
-        { name: "Chewbacca", isPresent: false },
-    ]
-}
+const busses = [];
 
-const busses = [bus1, bus2, bus3];
+const mockBus1 = new Bus("501", "Mrs. Puff");
+busses.push(mockBus1);
+mockBus1.addStudent(new Student("Squidward"));
+mockBus1.addStudent(new Student("Spongebob"));
+mockBus1.addStudent(new Student("Patrick"));
+mockBus1.addStudent(new Student("Eugene"));
+mockBus1.addStudent(new Student("Sandy"));
+mockBus1.addStudent(new Student("Gary"));
+
+const mockBus2 = new Bus("426", "Roshi");
+busses.push(mockBus2);
+mockBus2.addStudent(new Student("Goku"));
+mockBus2.addStudent(new Student("Piccolo"));
+mockBus2.addStudent(new Student("Kirllin"));
+mockBus2.addStudent(new Student("Gohan"));
+mockBus2.addStudent(new Student("Vegeta"));
+mockBus2.addStudent(new Student("Trunks"));
+
+const mockBus3 = new Bus("525", "Yoda");
+busses.push(mockBus3);
+mockBus3.addStudent(new Student("Han Solo"));
+mockBus3.addStudent(new Student("Ben"));
+mockBus3.addStudent(new Student("Leah"));
+mockBus3.addStudent(new Student("Luke"));
+mockBus3.addStudent(new Student("Darth Vader"));
+mockBus3.addStudent(new Student("Chewbacca"));
 
 // Display all the busses in the database on 'sideNav' bar.
 const displaySideNav = (busses) => {
@@ -113,9 +119,25 @@ const displayStudents = (bus) => {
         document.getElementById('bus-capacity').innerHTML = bus.busCapacity.toUpperCase();
     }
 
-    function createBus(busId) {
-        
+    function createBus(busId, driver) {
+        const newBus = new Bus(busId, driver);
+        busses.push(newBus);
+    }
 
+    function createStudent(busId, name) {
+        const newStudent = new Student(name);
+        let currentBus = new Bus();
+        busses.forEach(bus => {
+            if (bus.busId == busId) {
+                currentBus = bus;
+            }
+        });
+        currentBus.addStudent(newStudent);
+    }
+     
+    function createStudentWithBusObject(bus, name) {
+        const newStudent = new Student(name);
+        bus.addStudent(newStudent);
     }
 
 displaySideNav(busses);

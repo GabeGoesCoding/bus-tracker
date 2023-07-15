@@ -90,7 +90,7 @@ function displaySideNav() {
         const aNode = document.createElement('a');
         aNode.setAttribute('href', `index.html?busId=${busId}`);
         aNode.innerHTML = `Bus: ${busId}`;
-        aNode.addEventListener('onclick', displayStudents());
+        aNode.addEventListener('click', displayStudents());
         document.getElementById('sideNav').appendChild(aNode);
     });
 }
@@ -99,7 +99,6 @@ function displaySideNav() {
 function displayStudents() {
     const bus = getBusFromParams();
     displayBusCapacity(bus);
-
     // remove 'bus-display' content
     document.getElementById('bus-display').innerHTML = "";
     // for each student, display name, status, and create a button to track state.
@@ -132,9 +131,15 @@ function displayBusCapacity(bus) {
 
 // graps a bus from the busMap by using the busId params
 function getBusFromParams() {
+    // TO DO: displayStudents is automically rendering for the first bus
+    // When there are no search Params, then we will access the first bus with busId: 501
+    if (window.location.search === '') {
+        return busMap.get('501');
+    } else {
     var urlParams = new URLSearchParams(window.location.search);
     var currentBusId = urlParams.get('busId');
     return busMap.get(currentBusId); 
+    }
 }
 
     // function createBus(busId, driver) {

@@ -85,13 +85,21 @@ mockBus3.addStudent(new Student("Chewbacca"));
 
 // Display all the busses in the database on 'sideNav' bar.
 function displaySideNav() {
+    const sideNavNode = document.getElementById('sideNav');
+    const createBusButton = document.createElement('button');
+    createBusButton.setAttribute('id', 'create-bus');
+    createBusButton.innerHTML = 'Create Bus';
+    createBusButton.addEventListener('click', displayCreateBus)
+    sideNavNode.appendChild(createBusButton);
+    
+
     const busIdsArray = Array.from(busMap.keys());
     busIdsArray.forEach(busId => {
         const aNode = document.createElement('a');
         aNode.setAttribute('href', `index.html?busId=${busId}`);
         aNode.innerHTML = `Bus: ${busId}`;
         aNode.addEventListener('click', displayStudents());
-        document.getElementById('sideNav').appendChild(aNode);
+        sideNavNode.appendChild(aNode);
     });
 }
 
@@ -141,6 +149,15 @@ function getBusFromParams() {
     return busMap.get(currentBusId); 
     }
 }
+
+function displayCreateBus() {
+    document.getElementById('bus-display').innerHTML = "";
+    document.getElementById('bus-capacity').innerHTML = "";
+
+    const createBusForm = document.getElementById('create-bus');
+    document.createElement('input');
+
+    } 
 
     // function createBus(busId, driver) {
         // const newBus = new Bus(busId, driver);

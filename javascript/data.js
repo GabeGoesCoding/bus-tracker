@@ -1,5 +1,5 @@
-import { Student } from './student.js';
-import { Bus } from './bus.js';
+import { Student } from './models/student.js';
+import { Bus } from './models/bus.js';
 
 export const busMap = new Map();
 

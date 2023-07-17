@@ -1,93 +1,99 @@
-import { busMap } from './data.js';
+import { Student } from './models/student.js';
+import { Bus } from './models/bus.js';
 
-// Landing page will shoe all the available busIds in the nav bar, and the default page
-function displayLandingPage() {
-    // pull all available busses from busMap
-    const busIdsArray = Array.from(busMap.keys());
+const busMap = new Map();
 
-    const sideNavNode = document.getElementById('sideNav');
+const mockBus1 = new Bus("501", "Mrs. Puff");
+busMap.set("501", mockBus1);
+mockBus1.addStudent(new Student("Squidward"));
+mockBus1.addStudent(new Student("Spongebob"));
+mockBus1.addStudent(new Student("Patrick"));
+mockBus1.addStudent(new Student("Eugene"));
+mockBus1.addStudent(new Student("Sandy"));
+mockBus1.addStudent(new Student("Gary"));
 
-    // for each busId create a button in the sideNav bar
-    busIdsArray.forEach(busId => {
-        const buttonNode = document.createElement('button');
-        buttonNode.setAttribute('bus-id', busId);
-        buttonNode.innerHTML = `Bus: ${busId}`;
-        buttonNode.addEventListener('click', displayStudents);
-        sideNavNode.appendChild(buttonNode);
-    });
 
+const mockBus2 = new Bus("426", "Roshi");
+busMap.set("426", mockBus2);
+mockBus2.addStudent(new Student("Goku"));
+mockBus2.addStudent(new Student("Piccolo"));
+mockBus2.addStudent(new Student("Kirllin"));
+mockBus2.addStudent(new Student("Gohan"));
+mockBus2.addStudent(new Student("Vegeta"));
+mockBus2.addStudent(new Student("Trunks"));
+
+const mockBus3 = new Bus("525", "Yoda");
+busMap.set("525", mockBus3);
+mockBus3.addStudent(new Student("Han Solo"));
+mockBus3.addStudent(new Student("Ben"));
+mockBus3.addStudent(new Student("Leah"));
+mockBus3.addStudent(new Student("Luke"));
+mockBus3.addStudent(new Student("Darth Vader"));
+mockBus3.addStudent(new Student("Chewbacca"));
+
+function getBusIds() {
+    return Array.from(busMap.keys());
 }
 
-// // Display all the busses in the database on 'sideNav' bar.
-// function displaySideNav() {
-//     const sideNavNode = document.getElementById('sideNav');
-//     const createBusButton = document.createElement('button');
-//     createBusButton.setAttribute('id', 'create-bus');
-//     createBusButton.innerHTML = 'Create Bus';
-//     createBusButton.addEventListener('click', displayCreateBus)
-//     sideNavNode.appendChild(createBusButton);
-    
+function displaySideNavBarWithBusIds() {
+    const navBar = document.getElementById('sideNav');
+    navBar.innerHTML = "";
+    getBusIds().forEach( busId => {
+        const busButton = document.createElement('button');
+        busButton.setAttribute('bus-id', busId);
+        busButton.innerHTML = `Bus #${busId}`;
+        busButton.addEventListener('click', displayStudents);
+        navBar.appendChild(busButton);
+    });
+}
 
-//     const busIdsArray = Array.from(busMap.keys());
-//     busIdsArray.forEach(busId => {
-//         const aNode = document.createElement('a');
-//         aNode.setAttribute('href', `index.html?busId=${busId}`);
-//         aNode.innerHTML = `Bus: ${busId}`;
-//         aNode.addEventListener('click', displayStudents());
-//         sideNavNode.appendChild(aNode);
-//     });
-// }
+function displayStudents(event) {
 
-// Create a list item for each student and render it on the page.
-function displayStudents() {
-    const busId = event.target.getAttribute('bus-id');
-    const bus = busMap.get(busId);
+    // get bus from search params
+    const bus = grabBusByBusIdFromEvent(event);
+    // reset students-list
+    const studentList = document.getElementById('students-list')
+    studentList.innerHTML = "";
 
-    // remove 'bus-display' content
-    document.getElementById('bus-display').innerHTML = "";
-    // for each student, display name, status, and create a button to track state.
-    bus.students.forEach(student => {
-        const buttonNode = document.createElement('button')
-        var studentStatus = student.isPresent ? "here" : "not here";
-        buttonNode.innerHTML = student.isPresent ? "Mark as absent" : "Mark as present"; 
-        buttonNode.addEventListener('click', () => {
+    // display bus capacity
+
+
+    // list students from bus
+    bus.students.forEach( student => {
+        const pElem = document.createElement('p');
+        pElem.innerHTML = `${student.name}, ${student.isPresent} `;
+        
+        const bElem = document.createElement('button');
+        bElem.innerHTML = student.isPresent ? "Mark Absent" : "Mark Present";
+        bElem.addEventListener('click', () => {
             if (student.isPresent) {
                 student.markAbsent();
+                bElem.innerHTML = "Mark Present";
             } else {
                 student.markPresent();
+                bElem.innerHTML = "Mark Absent";
             }
-            displayStudents();
+            bus.updateCapacity();
+            displayStudents(event);
         });
-        const pNode = document.createElement('p'); 
-        pNode.innerHTML += `${student.name} is ${studentStatus} `;
-        pNode.appendChild(buttonNode);
 
-        // add new paragraph for each student
-        document.getElementById("bus-display").appendChild(pNode);
+        pElem.appendChild(bElem);
+        studentList.appendChild(pElem);
     });
 }
 
-// updates the bus capacity and displays it on the page
-function displayBusCapacity(bus) {
-    bus.updateCapacity();
+function displayBusCapacity() {
+    const bus = grabBusFromBusIdFromSearchParams();
     document.getElementById('bus-capacity').innerHTML = bus.capacity.toUpperCase();
 }
 
-// graps a bus from the busMap by using the busId params
-function getBusFromParams(busId) {
-    // TO DO: displayStudents is automically rendering for the first bus
-    // When there are no search Params, then we will access the first bus with busId: 501
+function grabBusByBusIdFromEvent(event) {
+    // grab busId from search params
+    const busId = event.target.getAttribute('bus-id');
+
     
-    return busMap.get(currentBusId); 
-    }
+    // grab bus from busId
+    return busMap.get(busId);
+}
 
-// function displayCreateBus() {
-//     document.getElementById('bus-display').innerHTML = "";
-//     document.getElementById('bus-capacity').innerHTML = "";
-
-//     const createBusForm = document.getElementById('create-bus');
-//     document.createElement('input');
-
-
-// displaySideNav();
-displayLandingPage();
+displaySideNavBarWithBusIds();

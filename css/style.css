@@ -21,11 +21,12 @@ body {
 
 
 /* Side navigation links */
-.sidenav a {
+.sidenav button {
   color: black;
   font-weight: bold;
   padding: 16px;
   text-decoration: none;
+  width: 100%;
   display: block;
 }
 

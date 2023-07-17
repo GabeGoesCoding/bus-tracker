@@ -1,35 +1,4 @@
-import { Student } from './models/student.js';
-import { Bus } from './models/bus.js';
-
-const busMap = new Map();
-
-const mockBus1 = new Bus("501", "Mrs. Puff");
-busMap.set("501", mockBus1);
-mockBus1.addStudent(new Student("Squidward"));
-mockBus1.addStudent(new Student("Spongebob"));
-mockBus1.addStudent(new Student("Patrick"));
-mockBus1.addStudent(new Student("Eugene"));
-mockBus1.addStudent(new Student("Sandy"));
-mockBus1.addStudent(new Student("Gary"));
-
-
-const mockBus2 = new Bus("426", "Roshi");
-busMap.set("426", mockBus2);
-mockBus2.addStudent(new Student("Goku"));
-mockBus2.addStudent(new Student("Piccolo"));
-mockBus2.addStudent(new Student("Kirllin"));
-mockBus2.addStudent(new Student("Gohan"));
-mockBus2.addStudent(new Student("Vegeta"));
-mockBus2.addStudent(new Student("Trunks"));
-
-const mockBus3 = new Bus("525", "Yoda");
-busMap.set("525", mockBus3);
-mockBus3.addStudent(new Student("Han Solo"));
-mockBus3.addStudent(new Student("Ben"));
-mockBus3.addStudent(new Student("Leah"));
-mockBus3.addStudent(new Student("Luke"));
-mockBus3.addStudent(new Student("Darth Vader"));
-mockBus3.addStudent(new Student("Chewbacca"));
+import { busMap } from './data.js';
 
 function getBusIds() {
     return Array.from(busMap.keys());
@@ -56,7 +25,7 @@ function displayStudents(event) {
     studentList.innerHTML = "";
 
     // display bus capacity
-
+    displayBusCapacity(event);
 
     // list students from bus
     bus.students.forEach( student => {
@@ -82,8 +51,8 @@ function displayStudents(event) {
     });
 }
 
-function displayBusCapacity() {
-    const bus = grabBusFromBusIdFromSearchParams();
+function displayBusCapacity(event) {
+    const bus = grabBusByBusIdFromEvent(event);
     document.getElementById('bus-capacity').innerHTML = bus.capacity.toUpperCase();
 }
 
@@ -91,7 +60,6 @@ function grabBusByBusIdFromEvent(event) {
     // grab busId from search params
     const busId = event.target.getAttribute('bus-id');
 
-    
     // grab bus from busId
     return busMap.get(busId);
 }

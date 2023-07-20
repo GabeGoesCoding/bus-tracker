@@ -85,12 +85,6 @@ function grabBusByBusIdFromEvent(event) {
     return busMap.get(busId);
 }
 
-// create bus function
-// pass two form fields to create a new bus and new students and add them to the current busmap
-// tear down display students
-// render a form for bus id and driver
-// when form is submitted, open up the bus to add students
-
 function renderCreateBusForm() {
     tearDownBusCapacity();
     tearDownStudentsList();

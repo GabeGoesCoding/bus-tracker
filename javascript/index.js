@@ -1,10 +1,12 @@
 import { busMap } from './data.js';
 import { Bus } from './models/bus.js';
 
+// create and array of all the bus ids in the data store
 function getBusIds() {
     return Array.from(busMap.keys());
 }
 
+// update/display the bus ids in the side nav bar
 function displaySideNavBarWithBusIds() {
     const navBar = document.getElementById('sideNav');
     navBar.innerHTML = "";
@@ -26,9 +28,10 @@ function displaySideNavBarWithBusIds() {
 
 // TODO: display button to add students
 // TODO: display button to remove students
+// tear down the previous bus information, and display updated information from the data store
 function displayStudents(event) {
 
-    // get bus from search params
+    // get bus from event attribute: 'bus-id'
     const bus = grabBusByBusIdFromEvent(event);
     
     // reset students-list
@@ -62,10 +65,21 @@ function displayStudents(event) {
             bus.updateCapacity();
             displayStudents(event);
         });
-
+        
+        // append button to student info
         pElem.appendChild(bElem);
+
+        // append student info to student list
         studentList.appendChild(pElem);
     });
+}
+
+function grabBusByBusIdFromEvent(event) {
+    // grab busId from 'bus-id' on the event
+    const busId = event.target.getAttribute('bus-id');
+
+    // grab bus with busId
+    return busMap.get(busId);
 }
 
 function displayBusCapacity(event) {
@@ -77,19 +91,16 @@ function tearDownBusCapacity() {
     document.getElementById('bus-capacity').innerHTML = "";
 }
 
-function grabBusByBusIdFromEvent(event) {
-    // grab busId from search params
-    const busId = event.target.getAttribute('bus-id');
-
-    // grab bus from busId
-    return busMap.get(busId);
+function tearDownStudentsList() {
+    document.getElementById('students-list').innerHTML = "";
 }
 
 function renderCreateBusForm() {
+    // remove information about bus
     tearDownBusCapacity();
     tearDownStudentsList();
-    
 
+    // render a new form
     const formElem = document.getElementById('create-bus-form');
     let formHTML = `
     <label for="bus-id">Bus Number:</label>
@@ -100,16 +111,13 @@ function renderCreateBusForm() {
     `;
     formElem.innerHTML = formHTML;
 
+    // prepare form for user entry
     const buttonElem = document.getElementById('create-bus-button');
     buttonElem.addEventListener('click', createBus);
 }
 
 function tearDownCreateBusForm() {
     document.getElementById('create-bus-form').innerHTML = "";
-}
-
-function tearDownStudentsList() {
-    document.getElementById('students-list').innerHTML = "";
 }
 
 // TODO: Do not allow users to input busIds that are not 3-digits

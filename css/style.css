@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, Helvetica, sans-serif;
+  font-family: Tahoma, Geneva, Verdana, sans-serif, Helvetica, sans-serif;
 }
 
 /* Style the side navigation */
@@ -19,7 +19,6 @@ body {
   overflow-x: hidden;
 }
 
-
 /* Side navigation links */
 .sidenav button {
   color: black;
@@ -28,12 +27,19 @@ body {
   text-decoration: none;
   width: 100%;
   display: block;
+  background-color: #4285f4;
+}
+ 
+.sidenav .full-bus-button {
+  background-color: #34A853;
 }
 
-/* Change color on hover */
-.sidenav a:hover {
-  background-color: #ddd;
-  color: black;
+.sidenav .partial-bus-button {
+  background-color: #fbbc05;
+}
+
+.sidenav .empty-bus-button {
+  background-color: #ea4335;
 }
 
 /* Style the content */

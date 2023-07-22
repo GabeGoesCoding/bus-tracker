@@ -1,104 +1,33 @@
 import { busMap } from './data.js';
 import { Bus } from './models/bus.js';
+import { Student } from './models/student.js';
 
-// create and array of all the bus ids in the data store
-function getBusIds() {
-    return Array.from(busMap.keys());
-}
 
 // update/display the bus ids in the side nav bar
-function displaySideNavBarWithBusIds() {
-    const navBar = document.getElementById('sideNav');
-    navBar.innerHTML = "";
+function displayNavBar() {
+    tearDownNavBar();
+    addCreateButtonForBussesToNavBar();
+    renderBussesInNavBar();
+}
 
+function tearDownNavBar() {
+    const navBar = document.getElementById('nav-bar');
+    navBar.innerHTML = "";
+}
+
+function addCreateButtonForBussesToNavBar() {
+    const navBar = document.getElementById('nav-bar');
     const createBusButtonElem = document.createElement('button');
     createBusButtonElem.setAttribute('id','create-bus');
     createBusButtonElem.innerHTML = "Create New Bus";
-    createBusButtonElem.addEventListener('click', renderCreateBusForm);
-    navBar.appendChild(createBusButtonElem)
-
-    getBusIds().forEach( busId => {
-        const busButton = document.createElement('button');
-        busButton.setAttribute('bus-id', busId);
-        busButton.innerHTML = `Bus #${busId}`;
-        busButton.addEventListener('click', displayStudents);
-        navBar.appendChild(busButton);
-    });
+    createBusButtonElem.addEventListener('click', openCreateBusFormOnMainBusInfo);
+    navBar.appendChild(createBusButtonElem);
 }
 
-// TODO: display button to add students
-// TODO: display button to remove students
-// tear down the previous bus information, and display updated information from the data store
-function displayStudents(event) {
+function openCreateBusFormOnMainBusInfo() {
+    groupTearDownOfBusInfo();
 
-    // get bus from event attribute: 'bus-id'
-    const bus = grabBusByBusIdFromEvent(event);
-    
-    // reset students-list
-    tearDownStudentsList();
-    const studentList = document.getElementById('students-list');
-
-    // tear down bus form
-    tearDownCreateBusForm();
-
-    // tear down bus capacity
-    tearDownBusCapacity();
-
-    // display bus capacity
-    displayBusCapacity(event);
-
-    // list students from bus
-    bus.students.forEach( student => {
-        const pElem = document.createElement('p');
-        pElem.innerHTML = `${student.name}, ${student.isPresent} `;
-        
-        const bElem = document.createElement('button');
-        bElem.innerHTML = student.isPresent ? "Mark Absent" : "Mark Present";
-        bElem.addEventListener('click', () => {
-            if (student.isPresent) {
-                student.markAbsent();
-                bElem.innerHTML = "Mark Present";
-            } else {
-                student.markPresent();
-                bElem.innerHTML = "Mark Absent";
-            }
-            bus.updateCapacity();
-            displayStudents(event);
-        });
-        
-        // append button to student info
-        pElem.appendChild(bElem);
-
-        // append student info to student list
-        studentList.appendChild(pElem);
-    });
-}
-
-function grabBusByBusIdFromEvent(event) {
-    // grab busId from 'bus-id' on the event
-    const busId = event.target.getAttribute('bus-id');
-
-    // grab bus with busId
-    return busMap.get(busId);
-}
-
-function displayBusCapacity(event) {
-    const bus = grabBusByBusIdFromEvent(event);
-    document.getElementById('bus-capacity').innerHTML = bus.capacity.toUpperCase();
-}
-
-function tearDownBusCapacity() {
-    document.getElementById('bus-capacity').innerHTML = "";
-}
-
-function tearDownStudentsList() {
-    document.getElementById('students-list').innerHTML = "";
-}
-
-function renderCreateBusForm() {
-    // remove information about bus
-    tearDownBusCapacity();
-    tearDownStudentsList();
+    document.getElementById('bus-info-header').innerHTML = "Create New Bus";
 
     // render a new form
     const formElem = document.getElementById('create-bus-form');
@@ -114,10 +43,6 @@ function renderCreateBusForm() {
     // prepare form for user entry
     const buttonElem = document.getElementById('create-bus-button');
     buttonElem.addEventListener('click', createBus);
-}
-
-function tearDownCreateBusForm() {
-    document.getElementById('create-bus-form').innerHTML = "";
 }
 
 // TODO: Do not allow users to input busIds that are not 3-digits
@@ -143,7 +68,184 @@ function createBus(event) {
 
     alert(`Success: Bus #${busId} has been created with ${driverName} driving.`);
 
-    displaySideNavBarWithBusIds();
+    tearDownCreateBusForm();
+    displayNavBar();
 }
 
-displaySideNavBarWithBusIds();
+function tearDownCreateBusForm() {
+    document.getElementById('create-bus-form').innerHTML = "";
+}
+
+function renderBussesInNavBar() {
+    const navBar = document.getElementById('nav-bar');
+    const busses = Array.from(busMap.values());
+    
+    busses.forEach( bus => {
+        const busButton = document.createElement('button');
+        busButton.setAttribute('bus-id', bus.busId);
+        busButton.innerHTML = `Bus #${bus.busId}`;
+        if (bus.capacity === "full") {
+            busButton.setAttribute('class', 'full-bus-button');
+        }
+        if (bus.capacity === "partial") {
+            busButton.setAttribute('class', 'partial-bus-button');
+        }
+        if (bus.capacity === "empty") {
+            busButton.setAttribute('class', 'empty-bus-button');
+        }
+        busButton.addEventListener('click', displayBusInfo);
+        navBar.appendChild(busButton);
+    });
+}
+
+// create and array of all the bus ids in the data store
+function getBusIds() {
+    return Array.from(busMap.keys());``
+}
+
+// TODO: display button to add students
+// TODO: display button to remove students
+// tear down the previous bus information, and display updated information from the data store
+function displayBusInfo() {
+    groupTearDownOfBusInfo()
+    const busId = event.target.getAttribute('bus-id');
+    renderBusInfoHeader(busId);
+    addAddStudentButtonToBusInfo(busId);
+    // addRemoveStudentButtonToBusInfo()
+    renderBusCapacityToBusInfo(busId);
+    renderStudentListToBusInfo(busId);
+}
+
+function groupTearDownOfBusInfo() {
+    tearDownBusInfoHeader();
+    tearDownCreateBusForm();
+    tearDownAddStudentButtonToBusInfo();
+    // tearDownRemoveStudentButtonToBusInfo();
+    tearDownBusCapacityToBusInfo();
+    tearDownStudentListToBusInfo();
+    
+}
+
+function tearDownBusInfoHeader() {
+    document.getElementById('bus-info-header').innerHTML = "";
+}
+
+function tearDownAddStudentButtonToBusInfo() {
+    document.getElementById('button-container').innerHTML = "";
+}
+
+function tearDownRemoveStudentButtonToBusInfo() {
+
+}
+
+function tearDownBusCapacityToBusInfo() {
+    document.getElementById('bus-capacity').innerHTML = "";
+}
+
+function tearDownStudentListToBusInfo() {
+    document.getElementById('students-list').innerHTML = "";
+}
+
+
+function renderBusInfoHeader(busId) {
+    document.getElementById('bus-info-header').innerHTML = `Tracking Bus #${busId}`;
+}
+
+function addAddStudentButtonToBusInfo(busId) {
+    const buttonContainer = document.getElementById('button-container');
+    const addStudentButtonElem = document.createElement('button');
+    addStudentButtonElem.setAttribute('bus-id', busId);
+    addStudentButtonElem.innerHTML = `Add Student to Bus #${busId}`;
+    addStudentButtonElem.addEventListener('click', openAddStudentFormOnMainBusInfo);
+    buttonContainer.appendChild(addStudentButtonElem);
+}
+
+// TODO: Tear down main bus info to render a form for adding a student
+function openAddStudentFormOnMainBusInfo() {
+    groupTearDownOfBusInfo();
+
+    document.getElementById('bus-info-header').innerHTML = "Add New Student";
+
+    // render a new form
+    const formElem = document.getElementById('add-student-form');
+    let formHTML = `
+    <label for="student-name">Student Name:</label>
+    <input type="text" name="student-name" id="student-name"><br>
+    <button type="submit" id="add-student-button">Submit</button>
+    `;
+    formElem.innerHTML = formHTML;
+
+    // prepare form for user entry
+    const buttonElem = document.getElementById('add-student-button');
+    const busId = event.target.getAttribute('bus-id');
+    buttonElem.setAttribute('bus-id', busId);
+    buttonElem.addEventListener('click', addStudent);
+}
+
+function addStudent(event) {
+    // After form is submitted, do not refresh the page.
+    event.preventDefault();
+
+    // Grab the form information from the event    
+    const form = event.target.form;
+
+    // Using the form, grab the inputs with querySelector
+    const studentNameInput = form.querySelector('#student-name');
+
+    // Extract the value from the inputs
+    const studentName = studentNameInput.value;
+
+    // Grab a bus with busId and add a new student to the map
+    const busId = event.target.getAttribute('bus-id');
+    const bus = busMap.get(busId);
+    bus.addStudent(new Student(studentName));
+
+    alert(`Success: Bus #${busId} has a new student: ${studentName}`);
+
+    tearDownAddStudentForm();
+    displayNavBar();
+}
+
+function tearDownAddStudentForm() {
+    document.getElementById('add-student-form').innerHTML = "";
+}
+
+function addRemoveStudentButtonToBudInfo(busId) {
+}
+
+function renderBusCapacityToBusInfo(busId) {
+    const bus = busMap.get(busId);
+    document.getElementById('bus-capacity').innerHTML = bus.capacity.toUpperCase();
+}
+
+function renderStudentListToBusInfo(busId) {
+    const studentList = document.getElementById('students-list');
+    const bus = busMap.get(busId);
+    bus.students.forEach(student => {
+        const pElem = document.createElement('p');
+        pElem.innerHTML = `${student.name}, ${student.isPresent} `;
+        const bElem = document.createElement('button');
+        bElem.setAttribute('bus-id', busId);
+        bElem.innerHTML = student.isPresent ? "Mark Absent" : "Mark Present";
+        bElem.addEventListener('click', () => {
+            if (student.isPresent) {
+                student.markAbsent();
+                bElem.innerHTML = "Mark Present";
+            } else {
+                student.markPresent();
+                bElem.innerHTML = "Mark Absent";
+            }
+            bus.updateCapacity();
+            displayNavBar();
+            displayBusInfo();
+        });
+        
+        // append button to student info
+        pElem.appendChild(bElem);
+
+        // append student info to student list
+        studentList.appendChild(pElem);
+    });
+}   
+
+displayNavBar();

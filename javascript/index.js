@@ -108,7 +108,7 @@ function displayBusInfo() {
     renderBusInfoHeader(busId);
     addAddStudentButtonToBusInfo(busId);
     // addRemoveStudentButtonToBusInfo()
-    renderBusCapacityToBusInfo(busId);
+    renderBusInfo(busId);
     renderStudentListToBusInfo(busId);
 }
 
@@ -118,7 +118,7 @@ function groupTearDownOfBusInfo() {
     tearDownAddStudentForm();
     tearDownAddStudentButtonToBusInfo();
     // tearDownRemoveStudentButtonToBusInfo();
-    tearDownBusCapacityToBusInfo();
+    tearDownBusInfo();
     tearDownStudentListToBusInfo();
     
 }
@@ -143,8 +143,8 @@ function tearDownRemoveStudentButtonToBusInfo() {
 
 }
 
-function tearDownBusCapacityToBusInfo() {
-    document.getElementById('bus-capacity').innerHTML = "";
+function tearDownBusInfo() {
+    document.getElementById('bus-info').innerHTML = "";
 }
 
 function tearDownStudentListToBusInfo() {
@@ -214,9 +214,10 @@ function addStudent(event) {
 function addRemoveStudentButtonToBudInfo(busId) {
 }
 
-function renderBusCapacityToBusInfo(busId) {
+function renderBusInfo(busId) {
     const bus = busMap.get(busId);
-    document.getElementById('bus-capacity').innerHTML = bus.capacity.toUpperCase();
+    const capitalizeCapacity = bus.capacity.charAt(0).toUpperCase() + bus.capacity.slice(1);
+    document.getElementById('bus-info').innerHTML = `Driver: ${bus.driver} - Capacity: ${capitalizeCapacity}`;
 }
 
 function renderStudentListToBusInfo(busId) {
@@ -226,17 +227,20 @@ function renderStudentListToBusInfo(busId) {
         const divElem = document.createElement('div');
 
         const bElem = document.createElement('button');
-        bElem
-
         bElem.setAttribute('bus-id', busId);
-        bElem.innerHTML = student.isPresent ? "Mark Absent" : "Mark Present";
+        if (student.isPresent) {
+            bElem.className = "checkmark-button-selected";
+            bElem.innerHTML = "X";
+        } else {
+            bElem.className = "checkmark-button-unselected";
+            bElem.innerHTML = "O";
+        }
+
         bElem.addEventListener('click', () => {
             if (student.isPresent) {
                 student.markAbsent();
-                bElem.innerHTML = "Mark Present";
             } else {
                 student.markPresent();
-                bElem.innerHTML = "Mark Absent";
             }
             bus.updateCapacity();
             displayNavBar();
@@ -245,7 +249,7 @@ function renderStudentListToBusInfo(busId) {
         
         const pElem = document.createElement('p');
         pElem.className = "paragraph"
-        pElem.innerHTML = `${student.name}, ${student.isPresent} `;
+        pElem.innerHTML = `${student.name}`;
 
         divElem.appendChild(bElem);
         divElem.appendChild(pElem);

@@ -15,7 +15,7 @@ body {
 /* Style the side navigation */
 .sidenav {
   height: 100%;
-  width: 200px;
+  width: 150px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -49,6 +49,35 @@ body {
 
 /* Style the content */
 .content {
-  margin-left: 200px;
+  margin-left: 150px;
   padding-left: 20px;
+}
+
+/* Checkmark button styles */
+.checkmark-button-unselected {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #ea4335;
+  border: 1px solid black;
+  border-radius: 80%;
+  position: relative;
+}
+
+.checkmark-button-unselected:hover {
+  background-color: #e8675b;
+}
+
+.checkmark-button-selected {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #34A853;
+  border: 1px solid black;
+  border-radius: 80%;
+  position: relative;
+}
+
+.checkmark-button-selected:hover {
+  background-color: #6ca77c;
 }

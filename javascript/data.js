@@ -17,7 +17,7 @@ const mockBus2 = new Bus("426", "Roshi");
 busMap.set("426", mockBus2);
 mockBus2.addStudent(new Student("Goku"));
 mockBus2.addStudent(new Student("Piccolo"));
-mockBus2.addStudent(new Student("Kirllin"));
+mockBus2.addStudent(new Student("Krillin"));
 mockBus2.addStudent(new Student("Gohan"));
 mockBus2.addStudent(new Student("Vegeta"));
 mockBus2.addStudent(new Student("Trunks"));

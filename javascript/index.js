@@ -72,10 +72,6 @@ function createBus(event) {
     displayNavBar();
 }
 
-function tearDownCreateBusForm() {
-    document.getElementById('create-bus-form').innerHTML = "";
-}
-
 function renderBussesInNavBar() {
     const navBar = document.getElementById('nav-bar');
     const busses = Array.from(busMap.values());
@@ -119,6 +115,7 @@ function displayBusInfo() {
 function groupTearDownOfBusInfo() {
     tearDownBusInfoHeader();
     tearDownCreateBusForm();
+    tearDownAddStudentForm();
     tearDownAddStudentButtonToBusInfo();
     // tearDownRemoveStudentButtonToBusInfo();
     tearDownBusCapacityToBusInfo();
@@ -128,6 +125,14 @@ function groupTearDownOfBusInfo() {
 
 function tearDownBusInfoHeader() {
     document.getElementById('bus-info-header').innerHTML = "";
+}
+
+function tearDownCreateBusForm() {
+    document.getElementById('create-bus-form').innerHTML = "";
+}
+
+function tearDownAddStudentForm() {
+    document.getElementById('add-student-form').innerHTML = "";
 }
 
 function tearDownAddStudentButtonToBusInfo() {
@@ -170,7 +175,7 @@ function openAddStudentFormOnMainBusInfo() {
     const formElem = document.getElementById('add-student-form');
     let formHTML = `
     <label for="student-name">Student Name:</label>
-    <input type="text" name="student-name" id="student-name"><br>
+    <input type="text" name="student-name" id="student-name"><br><br>
     <button type="submit" id="add-student-button">Submit</button>
     `;
     formElem.innerHTML = formHTML;
@@ -204,10 +209,6 @@ function addStudent(event) {
 
     tearDownAddStudentForm();
     displayNavBar();
-}
-
-function tearDownAddStudentForm() {
-    document.getElementById('add-student-form').innerHTML = "";
 }
 
 function addRemoveStudentButtonToBudInfo(busId) {
@@ -247,5 +248,30 @@ function renderStudentListToBusInfo(busId) {
         studentList.appendChild(pElem);
     });
 }   
+
+// // Function to convert a Map to an array of key-value pairs
+// function mapToArray(map) {
+//   return Array.from(map.entries());
+// }
+
+// // Function to convert an array of key-value pairs to a Map
+// function arrayToMap(array) {
+//   return new Map(array);
+// }
+
+// function setBusMapInLocalStorage(busMap) {
+//     const serializedBusMap = JSON.stringify(mapToArray(busMap));
+//     localStorage.setItem('busMap', serializedBusMap)
+// }
+
+// function getBusMapFromLocalStorage() {
+//     const serializedBusMapFromLocalStorage = localStorage.getItem('busMap');
+//     const deserializedBusMap = arrayToMap(JSON.parse(serializedBusMapFromLocalStorage))
+//     return deserializedBusMap;
+// }
+
+function getBusMapFromJavaScript() {
+    return busMap;
+}
 
 displayNavBar();

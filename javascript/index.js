@@ -223,9 +223,11 @@ function renderStudentListToBusInfo(busId) {
     const studentList = document.getElementById('students-list');
     const bus = busMap.get(busId);
     bus.students.forEach(student => {
-        const pElem = document.createElement('p');
-        pElem.innerHTML = `${student.name}, ${student.isPresent} `;
+        const divElem = document.createElement('div');
+
         const bElem = document.createElement('button');
+        bElem
+
         bElem.setAttribute('bus-id', busId);
         bElem.innerHTML = student.isPresent ? "Mark Absent" : "Mark Present";
         bElem.addEventListener('click', () => {
@@ -241,11 +243,16 @@ function renderStudentListToBusInfo(busId) {
             displayBusInfo();
         });
         
+        const pElem = document.createElement('p');
+        pElem.className = "paragraph"
+        pElem.innerHTML = `${student.name}, ${student.isPresent} `;
+
+        divElem.appendChild(bElem);
+        divElem.appendChild(pElem);
         // append button to student info
-        pElem.appendChild(bElem);
 
         // append student info to student list
-        studentList.appendChild(pElem);
+        studentList.appendChild(divElem);
     });
 }   
 

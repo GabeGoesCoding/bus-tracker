@@ -7,6 +7,11 @@ body {
   font-family: Tahoma, Geneva, Verdana, sans-serif, Helvetica, sans-serif;
 }
 
+.paragraph {
+  display: inline-block;
+  margin-left: 20px;
+}
+
 /* Style the side navigation */
 .sidenav {
   height: 100%;

@@ -68,8 +68,11 @@ function createBus(event) {
 
     alert(`Success: Bus #${busId} has been created with ${driverName} driving.`);
 
+    event.target.setAttribute('bus-id', busId);
+
     tearDownCreateBusForm();
     displayNavBar();
+    displayBusInfo();
 }
 
 function renderBussesInNavBar() {
@@ -207,6 +210,7 @@ function addStudent(event) {
 
     alert(`Success: Bus #${busId} has a new student: ${studentName}`);
 
+    bus.updateCapacity();
     tearDownAddStudentForm();
     displayNavBar();
     displayBusInfo();
@@ -217,8 +221,7 @@ function addRemoveStudentButtonToBudInfo(busId) {
 
 function renderBusInfo(busId) {
     const bus = busMap.get(busId);
-    const capitalizeCapacity = bus.capacity.charAt(0).toUpperCase() + bus.capacity.slice(1);
-    document.getElementById('bus-info').innerHTML = `Driver: ${bus.driver} - Capacity: ${capitalizeCapacity}`;
+    document.getElementById('bus-info').innerHTML = `Driver: ${bus.driver}`;
 }
 
 function renderStudentListToBusInfo(busId) {

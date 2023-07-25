@@ -5,6 +5,7 @@
 body {
   margin: 0;
   font-family: Tahoma, Geneva, Verdana, sans-serif, Helvetica, sans-serif;
+  background-color: #CBC3E3;
 }
 
 .paragraph {
@@ -20,37 +21,82 @@ body {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: darkgrey;
+  background-color: grey;
+  border: 1px solid black;
   overflow-x: hidden;
+}
+
+/* Style the content */
+#bus-info-container {
+  margin-left: 155px;
+  margin-top: 5px;
+  padding-left: 16px;
+  max-width: 480px;
+  background-color: lightgoldenrodyellow;
+  border: 1px solid black;
+  border-radius: 5px;
+  
+}
+
+.form button, #button-container button {
+  color: black;
+  text-decoration: none;
+  display: block;
+  background-color: dodgerblue;
+  border: 1px solid black;
+  padding: 8px;
+  border-radius: 5px;
+  box-shadow: 1;
+}
+
+.form button:hover, #button-container button:hover {
+  background-color: skyblue;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+}
+
+#create-bus-form input{
+  margin: 4px;
 }
 
 /* Side navigation links */
 .sidenav button {
   color: black;
-  font-weight: bold;
+  font-weight: 600;
   padding: 16px;
   text-decoration: none;
   width: 100%;
   display: block;
-  background-color: #4285f4;
+  background-color: dodgerblue;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.sidenav button:hover {
+  background-color: skyblue;
 }
  
 .sidenav .full-bus-button {
-  background-color: #34A853;
+  background-color: mediumseagreen;
+}
+
+.sidenav .full-bus-button:hover {
+  background-color: lightgreen;
 }
 
 .sidenav .partial-bus-button {
-  background-color: #fbbc05;
+  background-color: orange;
+}
+
+.sidenav .partial-bus-button:hover {
+  background-color:  #FFD580;
 }
 
 .sidenav .empty-bus-button {
-  background-color: #ea4335;
+  background-color: tomato;
 }
 
-/* Style the content */
-.content {
-  margin-left: 150px;
-  padding-left: 20px;
+.sidenav .empty-bus-button:hover {
+  background-color: salmon;
 }
 
 /* Checkmark button styles */
@@ -58,26 +104,37 @@ body {
   display: inline-block;
   width: 30px;
   height: 30px;
-  background-color: #ea4335;
+  background-color: tomato;
   border: 1px solid black;
   border-radius: 80%;
   position: relative;
+  margin-bottom: 2px;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  transition-duration: 2s;
+}
+
+.checkmark-button-unselected:active {
+  background-color: black;
+  color: white;
 }
 
 .checkmark-button-unselected:hover {
-  background-color: #e8675b;
+  background-color: salmon;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }
 
 .checkmark-button-selected {
   display: inline-block;
   width: 30px;
   height: 30px;
-  background-color: #34A853;
+  background-color: mediumseagreen;
   border: 1px solid black;
   border-radius: 80%;
   position: relative;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }
 
 .checkmark-button-selected:hover {
-  background-color: #6ca77c;
+  background-color: lightgreen;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }

@@ -35,7 +35,7 @@ function openCreateBusFormOnMainBusInfo() {
     <label for="bus-id">Bus Number:</label>
     <input type="text" name="bus-id" id="bus-id"><br>
     <label for="driver-name">Driver Name:</label>
-    <input type="text" name="driver-name" id="driver-name"><br>
+    <input type="text" name="driver-name" id="driver-name"><br><br>
     <button type="submit" id="create-bus-button">Submit</button>
     `;
     formElem.innerHTML = formHTML;
@@ -209,6 +209,7 @@ function addStudent(event) {
 
     tearDownAddStudentForm();
     displayNavBar();
+    displayBusInfo();
 }
 
 function addRemoveStudentButtonToBudInfo(busId) {

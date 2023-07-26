@@ -97,11 +97,6 @@ function renderBussesInNavBar() {
     });
 }
 
-// create and array of all the bus ids in the data store
-function getBusIds() {
-    return Array.from(busMap.keys());``
-}
-
 // TODO: display button to add students
 // TODO: display button to remove students
 // tear down the previous bus information, and display updated information from the data store
@@ -140,10 +135,6 @@ function tearDownAddStudentForm() {
 
 function tearDownAddStudentButtonToBusInfo() {
     document.getElementById('button-container').innerHTML = "";
-}
-
-function tearDownRemoveStudentButtonToBusInfo() {
-
 }
 
 function tearDownBusInfo() {
@@ -216,9 +207,6 @@ function addStudent(event) {
     displayBusInfo();
 }
 
-function addRemoveStudentButtonToBudInfo(busId) {
-}
-
 function renderBusInfo(busId) {
     const bus = busMap.get(busId);
     document.getElementById('bus-info').innerHTML = `Driver: ${bus.driver}`;
@@ -264,6 +252,7 @@ function renderStudentListToBusInfo(busId) {
     });
 }   
 
+// Support for caching data in the browser session.
 // // Function to convert a Map to an array of key-value pairs
 // function mapToArray(map) {
 //   return Array.from(map.entries());
@@ -284,9 +273,5 @@ function renderStudentListToBusInfo(busId) {
 //     const deserializedBusMap = arrayToMap(JSON.parse(serializedBusMapFromLocalStorage))
 //     return deserializedBusMap;
 // }
-
-function getBusMapFromJavaScript() {
-    return busMap;
-}
 
 displayNavBar();

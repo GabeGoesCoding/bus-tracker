@@ -28,7 +28,6 @@ body {
   border: 1px solid black;
   overflow-x: hidden;
   border-radius: 5px;
-  /* float: left; */
 }
 
 /* Style the content */
@@ -39,6 +38,10 @@ body {
   background-color: lightgoldenrodyellow;
   border: 1px solid black;
   border-radius: 5px;
+}
+
+#bus-info {
+  border-bottom: 1px solid black;
 }
 
 .form button, #button-container button {
@@ -54,7 +57,7 @@ body {
 
 .form button:hover, #button-container button:hover {
   background-color: skyblue;
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
 #create-bus-form input{
@@ -72,6 +75,7 @@ body {
   background-color: dodgerblue;
   border: none;
   border-bottom: 1px solid black;
+  
 }
 
 .sidenav button:hover {
@@ -99,7 +103,7 @@ body {
 }
 
 .sidenav .empty-bus-button:hover {
-  background-color: salmon;
+  background-color: rgb(248, 163, 153);
 }
 
 /* Checkmark button styles */
@@ -112,12 +116,12 @@ body {
   border-radius: 80%;
   position: relative;
   margin-bottom: 2px;
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
 .checkmark-button-unselected:hover {
-  background-color: salmon;
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  background-color: rgb(248, 163, 153);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
 .checkmark-button-selected {
@@ -128,10 +132,10 @@ body {
   border: 1px solid black;
   border-radius: 80%;
   position: relative;
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
 .checkmark-button-selected:hover {
   background-color: lightgreen;
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }

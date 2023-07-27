@@ -18,7 +18,7 @@ A tracking application for teachers to ensure all students are accounted for dur
 
 ![20231107-bus-tracker.png](design/bus-tracker-wire-frames.png)
 
-## User Requirements
+## Functionality
 
 1. Software displays all busses and their capacity status
 2. Software displays all students and driver for a selected bus

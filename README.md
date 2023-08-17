@@ -6,10 +6,6 @@ A tracking application for teachers to ensure all students are accounted for dur
 
 - The goal of this project was to prepare me for learning React.js by reinforcing skills for JavaScript/HTML/CSS and introducing the JavaScript ES6 support.
 
-### Installation
-
-- This project can run smoothly in any [live code server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) supported by an IDE or directly in your web browser from *localhost*.
-
 # Design
 
 ## Wireframes

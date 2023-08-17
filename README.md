@@ -1,6 +1,6 @@
-# Bus-Tracker 🚌
+# Bus Tracker 🚌
 
-# Project Overview
+## Project Overview
 
 A tracking application for teachers to ensure all students are accounted for during bus duty.
 

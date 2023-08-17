@@ -8,7 +8,7 @@ A tracking application for teachers to ensure all students are accounted for dur
 
 # Design
 
-## Wireframes
+### Wireframes
 
 ![20231107-bus-tracker.png](design/bus-tracker-wire-frames.png)
 

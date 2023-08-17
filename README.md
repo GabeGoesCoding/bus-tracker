@@ -25,7 +25,7 @@ A tracking application for teachers to ensure all students are accounted for dur
 9. User creates new bus with new id and driver
 10. User add students to bus with name
 
-## OOP Design
+## Data Models
 
 - Bus
     - busId (String)
